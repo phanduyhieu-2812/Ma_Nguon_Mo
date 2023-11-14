@@ -1,102 +1,100 @@
-import sympy as sp
-from tkinter import Tk, Label, Entry, Button
+from sympy import Point, Polygon,N
+import tkinter as tk
+import matplotlib.pyplot as plt
+def vetamgiac():
+    Ax_value = float(Ax_entry.get())
+    Ay_value = float(Ay_entry.get())
+    Bx_value = float(Bx_entry.get())
+    By_value = float(By_entry.get())
+    Cx_value = float(Cx_entry.get())
+    Cy_value = float(Cy_entry.get())
 
-# Tạo ứng dụng
+    A = Point(Ax_value, Ay_value)
+    B = Point(Bx_value, By_value)
+    C = Point(Cx_value, Cy_value)
 
+    tamgiac = Polygon(A, B, C)
 
-# Hàm vẽ hình
-def draw_triangle(a, b, c):
-  a = float(entry_a.get())
-  b = float(entry_b.get())
-  c = float(entry_c.get())
-  """
-  Vẽ hình tam giác với các cạnh a, b, c.
+    x_coords = [A.x, B.x, C.x, A.x]
+    y_coords = [A.y, B.y, C.y, A.y]
 
-  Args:
-    a: Chiều dài cạnh a.
-    b: Chiều dài cạnh b.
-    c: Chiều dài cạnh c.
-  """
+    # Vẽ tam giác
+    plt.plot(x_coords, y_coords)
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.title('Tam giác')
+    plt.grid(True)
+    plt.show()
+def chuvi():
+    Ax_value = float(Ax_entry.get())
+    Ay_value = float(Ay_entry.get())
+    Bx_value = float(Bx_entry.get())
+    By_value = float(By_entry.get())
+    Cx_value = float(Cx_entry.get())
+    Cy_value = float(Cy_entry.get())
 
-  # Tạo các điểm A, B, C
-  A = sp.Point((0, 0))
-  B = sp.Point((a, 0))
-  C = sp.Point(sp.sqrt(a ** 2 - b ** 2), b)
+    A = Point(Ax_value, Ay_value)
+    B = Point(Bx_value, By_value)
+    C = Point(Cx_value, Cy_value)
+    AB=A.distance(B)
+    AC=A.distance(C)
+    BC=B.distance(C)
+    chu_vi =AB+AC+BC
+    chu_vi=N(chu_vi)
+    text_result.delete(1.0, tk.END)  # Xóa nội dung cũ trong ô văn bản
+    text_result.insert(tk.END, "Chu vi của tam giác  là:\n{}".format(chu_vi))
+def dientich():
+    Ax_value = float(Ax_entry.get())
+    Ay_value = float(Ay_entry.get())
+    Bx_value = float(Bx_entry.get())
+    By_value = float(By_entry.get())
+    Cx_value = float(Cx_entry.get())
+    Cy_value = float(Cy_entry.get())
 
-  # Vẽ hình tam giác
-  sp.plot((A, B, C, A), linestyle="--")
+    A = Point(Ax_value, Ay_value)
+    B = Point(Bx_value, By_value)
+    C = Point(Cx_value, Cy_value)
+    tamgiac = Polygon(A, B, C)
+    dien_tich = tamgiac.area
+    dien_tich=N(dien_tich)
+    text_result.delete(1.0, tk.END)  # Xóa nội dung cũ trong ô văn bản
+    text_result.insert(tk.END, "Diện của tam giác  là:\n{}".format(dien_tich))
 
-# Hàm tính chu vi
-def perimeter_triangle(a, b, c):
-  a = float(entry_a.get())
-  b = float(entry_b.get())
-  c = float(entry_c.get())
-  """
-  Tính chu vi tam giác với các cạnh a, b, c.
+window = tk.Tk()
+window.title("Tính toán tam giác từ các điểm trong không gian ")
+window.geometry("500x500")
 
-  Args:
-    a: Chiều dài cạnh a.
-    b: Chiều dài cạnh b.
-    c: Chiều dài cạnh c.
+label_a = tk.Label(window, text="Cạnh a:")
+label_b = tk.Label(window, text="Cạnh b:")
+label_c = tk.Label(window, text="Cạnh c:")
+label_result = tk.Label(window, text="Kết quả:")
+text_result = tk.Text(window, height=5, width=30)
 
-  Returns:
-    Chu vi tam giác.
-  """
+Ax_entry = tk.Entry(window, width=10)
+Ay_entry = tk.Entry(window, width=10)
+Bx_entry = tk.Entry(window, width=10)
+By_entry = tk.Entry(window, width=10)
+Cx_entry = tk.Entry(window, width=10)
+Cy_entry = tk.Entry(window, width=10)
 
-  return a + b + c
-
-# Hàm giải bài tập
-def solve_triangle(a, b, c):
-  a = float(entry_a.get())
-  b = float(entry_b.get())
-  c = float(entry_c.get())
-  """
-  Giải bài tập hình học cho tam giác với các cạnh a, b, c.
-
-  Args:
-    a: Chiều dài cạnh a.
-    b: Chiều dài cạnh b.
-    c: Chiều dài cạnh c.
-
-  Returns:
-    Các giá trị của các góc trong tam giác.
-  """
-
-  # Tính các giá trị của các cạnh
-  s = (a + b + c) / 2
-  A = sp.arccos((b ** 2 + c ** 2 - a ** 2) / (2 * b * c))
-  B = sp.arccos((a ** 2 + c ** 2 - b ** 2) / (2 * a * c))
-  C = sp.arccos((a ** 2 + b ** 2 - c ** 2) / (2 * a * b))
-
-  # Trả về các giá trị của các góc
-  return A, B, C
-app = Tk()
-
-# Tạo nhãn
-label_a = Label(app, text="Cạnh a:")
-label_b = Label(app, text="Cạnh b:")
-label_c = Label(app, text="Cạnh c:")
-
-# Tạo ô nhập
-entry_a = Entry(app)
-entry_b = Entry(app)
-entry_c = Entry(app)
-
-# Tạo nút
-button_draw = Button(app, text="Vẽ hình", command=draw_triangle)
-button_perimeter = Button(app, text="Tính chu vi", command=perimeter_triangle)
-button_solve = Button(app, text="Giải bài tập", command=solve_triangle)
-
-# Sắp xếp các thành phần
+button_ve = tk.Button(window, text="Vẽ tam giác", command=vetamgiac)
+button_chui=tk.Button(window,text="tính chu vi tam giác",command=chuvi)
+button_dientich=tk.Button(window,text="tính diện tích tam giác ",command=dientich)
 label_a.grid(row=0, column=0)
-entry_a.grid(row=0, column=1)
-label_b.grid(row=1, column=0)
-entry_b.grid(row=1, column=1)
-label_c.grid(row=2, column=0)
-entry_c.grid(row=2, column=1)
-button_draw.grid(row=3, column=0)
-button_perimeter.grid(row=3, column=1)
-button_solve.grid(row=3, column=2)
+Ax_entry.grid(row=0, column=1)
+Ay_entry.grid(row=0, column=2)
 
-# Chạy ứng dụng
-app.mainloop()
+label_b.grid(row=1, column=0)
+Bx_entry.grid(row=1, column=1)
+By_entry.grid(row=1, column=2)
+
+label_c.grid(row=2, column=0)
+Cx_entry.grid(row=2, column=1)
+Cy_entry.grid(row=2, column=2)
+
+button_ve.grid(row=3, column=0)
+button_chui.grid(row=4,column=0)
+button_dientich.grid(row=4,column=1)
+label_result.grid(row=5)
+text_result.grid(row=6)
+window.mainloop()
