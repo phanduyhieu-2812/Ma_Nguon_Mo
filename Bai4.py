@@ -6,17 +6,25 @@ def calculate_fourier_transform():
     expression = entry.get()
 
     # Tạo một biến ký hiệu
-    t = sp.symbols('t')
+    t, f, n, z = sp.symbols('t f n z')
 
     try:
         # Biểu diễn tín hiệu số từ biểu thức nhập vào
         signal = sp.sympify(expression)
 
         # Tính biến đổi Fourier cho tín hiệu số
-        fourier_transform = sp.fourier_transform(signal, t, sp.symbols('f'))
+        fourier_transform = sp.fourier_transform(signal, t, f)
+
+        # Tính tích chập của hai tín hiệu
+        convolution = sp.convolve(signal, signal, t, t)
+
+        # Tính biến đổi Z của tín hiệu số
+        z_transform = sp.z_transform(signal, t, z)
 
         # Hiển thị kết quả lên giao diện
-        result_label.configure(text=str(fourier_transform))
+        result_label.configure(text="Biến đổi Fourier: " + str(fourier_transform) +
+                                    "\nTích chập: " + str(convolution) +
+                                    "\nBiến đổi Z: " + str(z_transform))
 
     except sp.SympifyError:
         result_label.configure(text="Error: Invalid expression")
