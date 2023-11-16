@@ -48,6 +48,7 @@ def giai_phuong_trinh():
 # Tạo cửa sổ giao diện
 window = tk.Tk()
 window.title("Ứng dụng giải hệ phương trình")
+window.geometry("500x500")
 
 # Tạo các thành phần giao diện
 n_label = tk.Label(window, text="Nhập số ẩn n:")
